@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       "
+>
+    <import resource="ctx-database.xml"/>
+
+    <context:component-scan base-package="sk.posam.fsa.boot"/>
+    <context:annotation-config/>
+    <tx:annotation-driven/>
+
+    <bean id="ActorService" class="sk.posam.fsa.boot.application.services.ActorApiServiceImpl" >
+        <property name="actorRepository" ref="actorRepo"/>
+        <property name="filmArchiveService" ref="filmArchive"/>
+    </bean>
+
+    <bean id="filmArchive" class="sk.posam.fsa.boot.application.services.FilmArchiveServiceImpl">
+        <property name="actorRepository" ref="actorRepo"/>
+        <property name="filmRepository" ref="filmRepo"/>
+    </bean>
+
+    <bean id="FilmService" class="sk.posam.fsa.boot.application.services.FilmApiServiceImpl">
+        <property name="filmRepositary" ref="FilmRepo"/>
+    </bean>
+
+</beans>
